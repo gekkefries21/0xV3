@@ -65,17 +65,17 @@ body, html {
 }
 
 .explore-button {
-    padding: 20px 40px;
-    font-size: 24px;
-    color: #fff;
-    background-color: #ff6f91; /* Button color */
+    background-color: #ff6f91; /* Button background color */
     border: none;
-    border-radius: 8px;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .explore-button:hover {
-    background-color: #ff8c9e; /* Hover color */
+    background-color: #e54e7e; /* Darker shade on hover */
     transform: scale(1.05);
 }

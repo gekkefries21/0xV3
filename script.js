@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audio = document.querySelector('#audio');
     const progressBar = document.querySelector('#progress-bar');
     const playPauseBtn = document.querySelector('#play-pause-btn');
+    const exploreBtn = document.querySelector('.explore-btn');
     let currentSection = 0;
     let transitionTimeout;
     let isPlaying = false;
@@ -71,25 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isPlaying = !isPlaying;
     };
 
-    sections[currentSection].classList.add('active');
-    contents[currentSection].classList.add('visible');
-    updateHash();
-    updateDots();
-
-    // Event listeners
-    window.addEventListener('wheel', (event) => {
-        if (event.deltaY > 0) {
-            if (currentSection < sections.length - 1) {
-                changeSection(currentSection + 1);
-            }
-        } else {
-            if (currentSection > 0) {
-                changeSection(currentSection - 1);
-            }
-        }
-    });
-
-    document.querySelector('.explore-btn').addEventListener('click', () => {
+    exploreBtn.addEventListener('click', () => {
         changeSection(1); // Go to Showcase section
         audio.play(); // Start playing audio
         topBar.style.opacity = '1'; // Show the top bar
@@ -105,5 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.addEventListener('ended', () => {
         playPauseBtn.textContent = 'Play';
         isPlaying = false;
+    });
+
+    window.addEventListener('wheel', (event) => {
+        if (event.deltaY > 0) {
+            if (currentSection < sections.length - 1) {
+                changeSection(currentSection + 1);
+            }
+        } else {
+            if (currentSection > 0) {
+                changeSection(currentSection - 1);
+            }
+        }
     });
 });

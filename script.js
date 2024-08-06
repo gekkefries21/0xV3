@@ -1,12 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     const contents = document.querySelectorAll('.content');
-    const wrapper = document.createElement('div');
-    wrapper.className = 'wrapper';
-    document.body.appendChild(wrapper);
-    
-    sections.forEach(section => wrapper.appendChild(section));
-    
     let currentSection = 0;
     
     const updateHash = () => {
@@ -15,22 +9,32 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const changeSection = (newSection) => {
-        if (newSection >= 0 && newSection < sections.length) {
-            // Fade out current content
+        if (newSection === currentSection) return;
+
+        // Determine direction of transition
+        const direction = newSection > currentSection ? 'down' : 'up';
+
+        sections[currentSection].classList.remove('active');
+        sections[currentSection].classList.add('hidden');
+        sections[currentSection].classList.add(direction);
+
+        sections[newSection].classList.add('active');
+        sections[newSection].classList.remove('hidden');
+        sections[newSection].classList.remove(direction);
+
+        // Ensure content is hidden during transition
+        contents[currentSection].classList.remove('visible');
+        setTimeout(() => {
             contents[currentSection].classList.remove('visible');
-            // Wait for fade out before starting slide transition
-            setTimeout(() => {
-                wrapper.style.transform = `translateY(-${newSection * 100}vh)`;
-                // Update section and fade in new content after sliding transition
-                setTimeout(() => {
-                    currentSection = newSection;
-                    contents[currentSection].classList.add('visible');
-                    updateHash();
-                }, 1000); // Match this duration with the CSS transform transition time
-            }, 500); // Match this duration with the CSS opacity transition time
-        }
+            contents[newSection].classList.add('visible');
+        }, 1000); // Delay to match transition time
+
+        currentSection = newSection;
+        updateHash();
     };
 
+    // Initialize
+    sections[currentSection].classList.add('active');
     contents[currentSection].classList.add('visible');
     updateHash();
 

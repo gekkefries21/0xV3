@@ -12,8 +12,21 @@
         <div class="dot" id="dot-showcase"></div>
         <div class="dot" id="dot-download"></div>
     </div>
+
+    <div class="top-bar" id="top-bar">
+        <div class="now-playing">
+            Now Playing: Friesenjung
+        </div>
+        <div class="progress-container">
+            <input type="range" id="progress-bar" value="0" max="100">
+        </div>
+        <div class="controls">
+            <button id="play-pause-btn">Play</button>
+        </div>
+    </div>
+
     <div class="section active" id="home">
-        <h1 class="content visible">Home Section</h1>
+        <button class="explore-btn">Explore</button>
     </div>
     <div class="section" id="showcase">
         <h1 class="content">Showcase Section</h1>
@@ -21,6 +34,9 @@
     <div class="section" id="download">
         <h1 class="content">Download Section</h1>
     </div>
+
+    <audio id="audio" src="song.mp3"></audio>
+
     <script src="script.js"></script>
 </body>
 </html>

@@ -63,3 +63,21 @@ body, html {
     transform: scale(1.5);
     background-color: #ff6f91; /* Color for the active dot */
 }
+
+/* Styles for the button */
+button {
+    padding: 15px 30px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff6f91; /* Button color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff3b65; /* Darker shade for hover effect */
+    transform: scale(1.05);
+}
+

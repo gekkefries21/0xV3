@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sections[currentSection].classList.add('active');
         setTimeout(() => {
             contents[currentSection].classList.add('visible');
-        }, 500); // Delay for content fade-in after slide transition
+        }, 500); // Delay for content fade-in after opacity transition
         updateHash();
     };
 

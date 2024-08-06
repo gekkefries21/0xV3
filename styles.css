@@ -8,7 +8,7 @@ body, html {
 
 .wrapper {
     width: 100vw;
-    height: 300vh;
+    height: 300vh; /* Adjust based on the number of sections */
     transition: transform 1s ease-in-out;
     position: relative; /* Ensure wrapper is positioned correctly */
 }

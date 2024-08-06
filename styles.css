@@ -3,6 +3,8 @@ body, html {
     padding: 0;
     overflow: hidden;
     font-family: Arial, sans-serif;
+    background-color: #a4508b; /* Purple/Pink Gradient for background */
+    background-image: linear-gradient(315deg, #a4508b 0%, #5f0a87 74%);
 }
 
 .section {
@@ -11,15 +13,15 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 100%;
-    transition: top 1s;
-    background-color: #a4508b; /* Purple/Pink Gradient */
-    background-image: linear-gradient(315deg, #a4508b 0%, #5f0a87 74%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s;
 }
 
 .section.active {
-    top: 0;
+    opacity: 1;
 }
 
 .content {

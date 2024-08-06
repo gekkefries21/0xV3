@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     overflow: hidden;
     font-family: Arial, sans-serif;
-    background-color: #a4508b; /* Purple/Pink Gradient for background */
+    background-color: #a4508b;
     background-image: linear-gradient(315deg, #a4508b 0%, #5f0a87 74%);
 }
 
@@ -18,6 +18,8 @@ body, html {
     left: 0;
     opacity: 0;
     transition: opacity 1s;
+    background-color: #a4508b; /* Purple/Pink Gradient */
+    background-image: linear-gradient(315deg, #a4508b 0%, #5f0a87 74%);
 }
 
 .section.active {

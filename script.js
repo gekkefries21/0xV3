@@ -3,11 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const contents = document.querySelectorAll('.content');
     const dots = document.querySelectorAll('.dot');
     const navbar = document.querySelector('.navbar');
-    const topBar = document.querySelector('#top-bar');
-    const audio = document.querySelector('#audio');
-    const progressBar = document.querySelector('#progress-bar');
-    const playPauseBtn = document.querySelector('#play-pause-btn');
-    const exploreBtn = document.querySelector('.explore-btn');
+    const exploreButton = document.getElementById('explore-button');
+    const audio = document.getElementById('audio');
+    const topBar = document.getElementById('top-bar');
+    const playPauseButton = document.getElementById('play-pause-button');
+    const progressBar = document.getElementById('progress-bar');
+    const currentTimeDisplay = document.getElementById('current-time');
+    const durationDisplay = document.getElementById('duration');
     let currentSection = 0;
     let transitionTimeout;
     let isPlaying = false;
@@ -26,19 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-
-    const updateProgressBar = () => {
-        if (audio.duration) {
-            progressBar.max = audio.duration;
-            progressBar.value = audio.currentTime;
-            const updateInterval = setInterval(() => {
-                if (!isPlaying) return;
-                progressBar.value = audio.currentTime;
-            }, 500);
-            return updateInterval;
-        }
-    };
-
+    
     const changeSection = (newSection) => {
         sections[currentSection].classList.remove('active');
         contents[currentSection].classList.remove('visible');
@@ -61,44 +51,44 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDots();
     };
 
-    const handlePlayPause = () => {
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
+
+    const updateProgressBar = () => {
+        const currentTime = audio.currentTime;
+        const duration = audio.duration;
+        progressBar.value = (currentTime / duration) * 100;
+        currentTimeDisplay.textContent = formatTime(currentTime);
+        durationDisplay.textContent = formatTime(duration - currentTime);
+    };
+
+    const setAudioTime = (event) => {
+        const duration = audio.duration;
+        const newTime = (event.target.value / 100) * duration;
+        audio.currentTime = newTime;
+    };
+
+    const togglePlayPause = () => {
         if (isPlaying) {
             audio.pause();
-            playPauseBtn.textContent = 'Play';
+            playPauseButton.textContent = 'Play';
         } else {
             audio.play();
-            playPauseBtn.textContent = 'Pause';
+            playPauseButton.textContent = 'Pause';
         }
         isPlaying = !isPlaying;
     };
 
-    exploreBtn.addEventListener('click', () => {
-        changeSection(1); // Go to Showcase section
-        audio.play(); // Start playing audio
-        topBar.style.opacity = '1'; // Show the top bar
-        updateProgressBar();
+    exploreButton.addEventListener('click', () => {
+        changeSection(1); // Move to the Showcase section
+        audio.play();
+        topBar.style.opacity = '1'; // Show the top bar when audio starts playing
+        isPlaying = true;
+        playPauseButton.textContent = 'Pause';
     });
 
-    playPauseBtn.addEventListener('click', handlePlayPause);
+    audio.addEventLis
 
-    progressBar.addEventListener('input', () => {
-        audio.currentTime = progressBar.value;
-    });
-
-    audio.addEventListener('ended', () => {
-        playPauseBtn.textContent = 'Play';
-        isPlaying = false;
-    });
-
-    window.addEventListener('wheel', (event) => {
-        if (event.deltaY > 0) {
-            if (currentSection < sections.length - 1) {
-                changeSection(currentSection + 1);
-            }
-        } else {
-            if (currentSection > 0) {
-                changeSection(currentSection - 1);
-            }
-        }
-    });
-});

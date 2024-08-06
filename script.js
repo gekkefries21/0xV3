@@ -90,5 +90,24 @@ document.addEventListener('DOMContentLoaded', () => {
         playPauseButton.textContent = 'Pause';
     });
 
-    audio.addEventLis
+    audio.addEventListener('timeupdate', updateProgressBar);
+    progressBar.addEventListener('input', setAudioTime);
+    playPauseButton.addEventListener('click', togglePlayPause);
 
+    sections[currentSection].classList.add('active');
+    contents[currentSection].classList.add('visible');
+    updateHash();
+    updateDots();
+
+    window.addEventListener('wheel', (event) => {
+        if (event.deltaY > 0) {
+            if (currentSection < sections.length - 1) {
+                changeSection(currentSection + 1);
+            }
+        } else {
+            if (currentSection > 0) {
+                changeSection(currentSection - 1);
+            }
+        }
+    });
+});

@@ -24,13 +24,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const changeSection = (newSection) => {
         sections[currentSection].classList.remove('active');
         contents[currentSection].classList.remove('visible');
-        navbar.style.opacity = '0'; // Hide the navbar before transitioning
+        
+        // Hide the navbar during the transition
+        navbar.style.opacity = '0'; 
+        
         clearTimeout(transitionTimeout); // Clear any existing timeout
         
         currentSection = newSection;
         sections[currentSection].classList.add('active');
         
-        // Show navbar again after the section transition is complete
+        // Schedule the navbar to reappear after the section transition is complete
         transitionTimeout = setTimeout(() => {
             navbar.style.opacity = '1'; // Show the navbar
         }, 1000); // Adjust this value if needed
@@ -58,5 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 changeSection(currentSection - 1);
             }
         }
+    });
+
+    // Add click event listener for the button in the home section
+    document.querySelector('#home button').addEventListener('click', () => {
+        changeSection(1); // Move to the "Showcase" section
     });
 });

@@ -64,3 +64,67 @@ body, html {
     background-color: #ff6f91; /* Color for the active dot */
 }
 
+.explore-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #ff6f91; /* Stylish pink button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.explore-btn:hover {
+    background-color: #ff4f73; /* Darker pink on hover */
+}
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 50px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.now-playing {
+    font-size: 1rem;
+}
+
+.progress-container {
+    flex: 1;
+    margin: 0 10px;
+}
+
+#progress-bar {
+    width: 100%;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+}
+
+#play-pause-btn {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #ff6f91;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#play-pause-btn:hover {
+    background-color: #ff4f73;
+}
+

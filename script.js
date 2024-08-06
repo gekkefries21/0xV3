@@ -16,16 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const changeSection = (newSection) => {
         if (newSection >= 0 && newSection < sections.length) {
-            // Ensure the current section's content fades out
+            // Fade out current content
             contents[currentSection].classList.remove('visible');
-            // Start transitioning to the new section
+            // Slide to the new section
             wrapper.style.transform = `translateY(-${newSection * 100}vh)`;
-            // Update section after transition
+            // Wait for slide transition to complete before updating content visibility
             setTimeout(() => {
                 currentSection = newSection;
                 contents[currentSection].classList.add('visible');
                 updateHash();
-            }, 1000); // Ensure content is added after transition
+            }, 1000); // Match this duration with the CSS transition time
         }
     };
 

@@ -16,19 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const changeSection = (newSection) => {
         if (newSection >= 0 && newSection < sections.length) {
-            // Start fading out current content
+            // Fade out current content
             contents[currentSection].classList.remove('visible');
-
-            // Slide transition
+            // Move to the new section
             wrapper.style.transform = `translateY(-${newSection * 100}vh)`;
-            
-            // Ensure the transition of sliding and fading happens smoothly
+            // Ensure that the new content is not visible until after the slide transition
             setTimeout(() => {
-                // Ensure the new section's content becomes visible after sliding completes
                 currentSection = newSection;
                 contents[currentSection].classList.add('visible');
                 updateHash();
-            }, 1000); // Ensure this matches the CSS transition time
+            }, 1000); // Match this duration with the CSS transition time
         }
     };
 
@@ -37,14 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('wheel', (event) => {
         if (event.deltaY > 0) {
+            // Scrolling down
             if (currentSection < sections.length - 1) {
                 changeSection(currentSection + 1);
             }
         } else {
+            // Scrolling up
             if (currentSection > 0) {
                 changeSection(currentSection - 1);
             }
         }
     });
 });
-

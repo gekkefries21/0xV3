@@ -10,7 +10,7 @@ body, html {
     width: 100vw;
     height: 300vh;
     transition: transform 1s ease-in-out;
-    position: relative; /* Ensure wrapper is positioned correctly */
+    position: relative;
 }
 
 .section {
@@ -23,7 +23,7 @@ body, html {
     top: 0;
     left: 0;
     transition: opacity 1s ease-in-out;
-    background: linear-gradient(315deg, #a4508b 0%, #5f0a87 74%);
+    background: inherit; /* Ensure background color inherits */
 }
 
 .content {
@@ -34,3 +34,4 @@ body, html {
 .content.visible {
     opacity: 1;
 }
+

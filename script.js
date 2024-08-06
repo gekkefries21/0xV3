@@ -18,9 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newSection >= 0 && newSection < sections.length) {
             // Fade out current content
             contents[currentSection].classList.remove('visible');
-            // Slide to the new section
+            
+            // Slide transition
+            wrapper.style.transition = 'transform 1s ease-in-out';
             wrapper.style.transform = `translateY(-${newSection * 100}vh)`;
-            // Wait for slide transition to complete before updating content visibility
+            
+            // Ensure smooth transition
             setTimeout(() => {
                 currentSection = newSection;
                 contents[currentSection].classList.add('visible');

@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     const contents = document.querySelectorAll('.content');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'wrapper';
+    document.body.appendChild(wrapper);
+    
+    sections.forEach(section => wrapper.appendChild(section));
+    
     let currentSection = 0;
     
     const updateHash = () => {
@@ -9,29 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const changeSection = (newSection) => {
-        sections[currentSection].classList.remove('active');
-        contents[currentSection].classList.remove('visible');
-        currentSection = newSection;
-        sections[currentSection].classList.add('active');
-        setTimeout(() => {
-            contents[currentSection].classList.add('visible');
-        }, 500); // Delay for content fade-in after opacity transition
-        updateHash();
+        if (newSection >= 0 && newSection < sections.length) {
+            contents[currentSection].classList.remove('visible');
+            currentSection = newSection;
+            wrapper.style.transform = `translateY(-${currentSection * 100}vh)`;
+            setTimeout(() => {
+                contents[currentSection].classList.add('visible');
+            }, 500); // Delay for content fade-in after slide transition
+            updateHash();
+        }
     };
 
-    sections[currentSection].classList.add('active');
     contents[currentSection].classList.add('visible');
     updateHash();
 
     window.addEventListener('wheel', (event) => {
         if (event.deltaY > 0) {
-            if (currentSection < sections.length - 1) {
-                changeSection(currentSection + 1);
-            }
+            changeSection(currentSection + 1);
         } else {
-            if (currentSection > 0) {
-                changeSection(currentSection - 1);
-            }
+            changeSection(currentSection - 1);
         }
     });
 });

@@ -9,7 +9,7 @@ body, html {
 .wrapper {
     width: 100vw;
     height: 300vh;
-    transition: transform 1s;
+    transition: transform 1s ease-in-out;
 }
 
 .section {
@@ -18,12 +18,15 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1s ease-in-out;
 }
 
 .content {
     opacity: 0;
-    transition: opacity 1s;
+    transition: opacity 1s ease-in-out;
 }
 
 .content.visible {

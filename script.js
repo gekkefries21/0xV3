@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show navbar again after the section transition is complete
         transitionTimeout = setTimeout(() => {
             navbar.style.opacity = '1'; // Show the navbar
-        }, 1000); // Adjust this value if needed
+        }, 5000); // Adjust this value if needed
         
         setTimeout(() => {
             contents[currentSection].classList.add('visible');

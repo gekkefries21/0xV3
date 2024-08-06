@@ -8,16 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const changeSection = (newSection) => {
-        sections[currentSection].style.opacity = 0;
+        sections[currentSection].classList.remove('active');
         currentSection = newSection;
-        sections[currentSection].style.opacity = 1;
+        sections[currentSection].classList.add('active');
         updateHash();
     };
 
-    sections.forEach(section => {
-        section.style.opacity = 0;
-    });
-    sections[currentSection].style.opacity = 1;
+    sections[currentSection].classList.add('active');
     updateHash();
 
     window.addEventListener('wheel', (event) => {

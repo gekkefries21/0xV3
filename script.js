@@ -2,35 +2,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     const contents = document.querySelectorAll('.content');
     let currentSection = 0;
-
+    
     const updateHash = () => {
         const sectionIds = ['home', 'showcase', 'download'];
         window.location.hash = sectionIds[currentSection];
     };
-
+    
     const changeSection = (newSection) => {
-        if (newSection === currentSection) return;
-        
-        // Add next class to the section being transitioned to
-        sections[newSection].classList.add('next');
-        sections[newSection].classList.add('active');
-        contents[newSection].classList.add('visible');
-        
-        // Start transition
-        sections[currentSection].classList.add('hidden');
         sections[currentSection].classList.remove('active');
         contents[currentSection].classList.remove('visible');
-        
+        currentSection = newSection;
+        sections[currentSection].classList.add('active');
         setTimeout(() => {
-            // Reset the classes to prepare for next transition
-            sections[currentSection].classList.remove('hidden');
-            sections[newSection].classList.remove('next');
-            currentSection = newSection;
-            updateHash();
-        }, 1000); // Match this timeout with the CSS transition duration
+            contents[currentSection].classList.add('visible');
+        }, 500); // Delay for content fade-in after opacity transition
+        updateHash();
     };
 
-    // Initialize the first section
     sections[currentSection].classList.add('active');
     contents[currentSection].classList.add('visible');
     updateHash();
@@ -47,4 +35,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-

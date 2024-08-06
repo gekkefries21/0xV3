@@ -6,20 +6,27 @@ body, html {
 }
 
 .section {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 1s;
-    opacity: 0;
+    position: fixed;
+    top: 100%;
+    transition: top 1s;
     background-color: #a4508b; /* Purple/Pink Gradient */
     background-image: linear-gradient(315deg, #a4508b 0%, #5f0a87 74%);
 }
 
 .section.active {
+    top: 0;
+}
+
+.content {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.content.visible {
     opacity: 1;
 }

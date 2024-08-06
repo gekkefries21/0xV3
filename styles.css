@@ -18,6 +18,8 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .dot {
@@ -62,74 +64,18 @@ body, html {
     background-color: #ff6f91; /* Color for the active dot */
 }
 
-/* Explore Button */
 .explore-button {
     padding: 20px 40px;
     font-size: 24px;
     color: #fff;
-    background-color: #ff6f91;
+    background-color: #ff6f91; /* Button color */
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .explore-button:hover {
-    background-color: #ff3b68;
+    background-color: #ff8c9e; /* Hover color */
     transform: scale(1.05);
-}
-
-/* Top Bar */
-.top-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 10;
-}
-
-.now-playing {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.progress-container {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.progress-bar {
-    width: 100%;
-    margin-bottom: 5px;
-    cursor: pointer;
-}
-
-.time-display {
-    font-size: 14px;
-}
-
-.play-pause-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #ff6f91;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.play-pause-button:hover {
-    background-color: #ff3b68;
 }

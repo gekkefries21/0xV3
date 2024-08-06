@@ -11,22 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const changeSection = (newSection) => {
         if (newSection === currentSection) return;
         
+        // Add next class to the section being transitioned to
+        sections[newSection].classList.add('next');
+        sections[newSection].classList.add('active');
+        contents[newSection].classList.add('visible');
+        
+        // Start transition
         sections[currentSection].classList.add('hidden');
         sections[currentSection].classList.remove('active');
         contents[currentSection].classList.remove('visible');
-
-        sections[newSection].classList.add('active');
-        sections[newSection].classList.remove('next');
-        contents[newSection].classList.add('visible');
-
+        
         setTimeout(() => {
-            sections[newSection].classList.remove('hidden');
+            // Reset the classes to prepare for next transition
+            sections[currentSection].classList.remove('hidden');
             sections[newSection].classList.remove('next');
-            sections[currentSection].classList.remove('active');
+            currentSection = newSection;
+            updateHash();
         }, 1000); // Match this timeout with the CSS transition duration
-
-        currentSection = newSection;
-        updateHash();
     };
 
     // Initialize the first section
@@ -37,12 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('wheel', (event) => {
         if (event.deltaY > 0) {
             if (currentSection < sections.length - 1) {
-                sections[currentSection].classList.add('next');
                 changeSection(currentSection + 1);
             }
         } else {
             if (currentSection > 0) {
-                sections[currentSection].classList.add('next');
                 changeSection(currentSection - 1);
             }
         }

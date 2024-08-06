@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const contents = document.querySelectorAll('.content');
     const dots = document.querySelectorAll('.dot');
     const navbar = document.querySelector('.navbar');
-    const exploreButton = document.querySelector('.explore-button');
-    const audio = document.getElementById('background-music');
     let currentSection = 0;
     let transitionTimeout;
 
@@ -12,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sectionIds = ['home', 'showcase', 'download'];
         window.location.hash = sectionIds[currentSection];
     };
-
+    
     const updateDots = () => {
         dots.forEach((dot, index) => {
             if (index === currentSection) {
@@ -22,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-
+    
     const changeSection = (newSection) => {
         sections[currentSection].classList.remove('active');
         contents[currentSection].classList.remove('visible');
@@ -45,13 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDots();
     };
 
-    const handleExploreClick = () => {
-        audio.play(); // Play the audio
-        changeSection(1); // Move to the showcase section
-    };
-
-    exploreButton.addEventListener('click', handleExploreClick);
-
     sections[currentSection].classList.add('active');
     contents[currentSection].classList.add('visible');
     updateHash();
@@ -69,4 +60,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-

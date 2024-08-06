@@ -17,12 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const changeSection = (newSection) => {
         if (newSection >= 0 && newSection < sections.length) {
             contents[currentSection].classList.remove('visible');
-            currentSection = newSection;
-            wrapper.style.transform = `translateY(-${currentSection * 100}vh)`;
             setTimeout(() => {
-                contents[currentSection].classList.add('visible');
-            }, 500); // Delay for content fade-in after slide transition
-            updateHash();
+                currentSection = newSection;
+                wrapper.style.transform = `translateY(-${currentSection * 100}vh)`;
+                setTimeout(() => {
+                    contents[currentSection].classList.add('visible');
+                }, 500); // Delay for content fade-in after slide transition
+                updateHash();
+            }, 500); // Delay for content fade-out before slide transition
         }
     };
 

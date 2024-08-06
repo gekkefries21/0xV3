@@ -3,22 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const contents = document.querySelectorAll('.content');
     const dots = document.querySelectorAll('.dot');
     const navbar = document.querySelector('.navbar');
-    const exploreButton = document.getElementById('explore-button');
-    const audio = document.getElementById('audio');
-    const topBar = document.getElementById('top-bar');
-    const playPauseButton = document.getElementById('play-pause-button');
-    const progressBar = document.getElementById('progress-bar');
-    const currentTimeDisplay = document.getElementById('current-time');
-    const durationDisplay = document.getElementById('duration');
+    const exploreButton = document.querySelector('.explore-button');
+    const audio = document.getElementById('background-music');
     let currentSection = 0;
     let transitionTimeout;
-    let isPlaying = false;
 
     const updateHash = () => {
         const sectionIds = ['home', 'showcase', 'download'];
         window.location.hash = sectionIds[currentSection];
     };
-    
+
     const updateDots = () => {
         dots.forEach((dot, index) => {
             if (index === currentSection) {
@@ -28,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-    
+
     const changeSection = (newSection) => {
         sections[currentSection].classList.remove('active');
         contents[currentSection].classList.remove('visible');
@@ -51,48 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDots();
     };
 
-    const formatTime = (time) => {
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time % 60);
-        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    const handleExploreClick = () => {
+        audio.play(); // Play the audio
+        changeSection(1); // Move to the showcase section
     };
 
-    const updateProgressBar = () => {
-        const currentTime = audio.currentTime;
-        const duration = audio.duration;
-        progressBar.value = (currentTime / duration) * 100;
-        currentTimeDisplay.textContent = formatTime(currentTime);
-        durationDisplay.textContent = formatTime(duration - currentTime);
-    };
-
-    const setAudioTime = (event) => {
-        const duration = audio.duration;
-        const newTime = (event.target.value / 100) * duration;
-        audio.currentTime = newTime;
-    };
-
-    const togglePlayPause = () => {
-        if (isPlaying) {
-            audio.pause();
-            playPauseButton.textContent = 'Play';
-        } else {
-            audio.play();
-            playPauseButton.textContent = 'Pause';
-        }
-        isPlaying = !isPlaying;
-    };
-
-    exploreButton.addEventListener('click', () => {
-        changeSection(1); // Move to the Showcase section
-        audio.play();
-        topBar.style.opacity = '1'; // Show the top bar when audio starts playing
-        isPlaying = true;
-        playPauseButton.textContent = 'Pause';
-    });
-
-    audio.addEventListener('timeupdate', updateProgressBar);
-    progressBar.addEventListener('input', setAudioTime);
-    playPauseButton.addEventListener('click', togglePlayPause);
+    exploreButton.addEventListener('click', handleExploreClick);
 
     sections[currentSection].classList.add('active');
     contents[currentSection].classList.add('visible');
@@ -111,3 +69,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+

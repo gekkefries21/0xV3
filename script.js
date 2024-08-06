@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const contents = document.querySelectorAll('.content');
     const dots = document.querySelectorAll('.dot');
     const navbar = document.querySelector('.navbar');
-    const exploreButton = document.querySelector('.explore-button');
     let currentSection = 0;
     let transitionTimeout;
 
@@ -60,11 +59,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    exploreButton.addEventListener('click', () => {
-        if (currentSection < sections.length - 1) {
-            changeSection(currentSection + 1);
-        }
-    });
 });
-

@@ -18,8 +18,6 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    opacity: 1;
-    transition: opacity 0.5s ease;
 }
 
 .dot {
@@ -64,62 +62,66 @@ body, html {
     background-color: #ff6f91; /* Color for the active dot */
 }
 
-.explore-btn {
+/* Explore Button */
+.explore-button {
     padding: 20px 40px;
-    font-size: 2rem;
+    font-size: 24px;
     color: #fff;
-    background-color: #ff6f91; /* Stylish pink button */
+    background-color: #ff6f91;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    outline: none;
 }
 
-.explore-btn:hover {
-    background-color: #ff4f73; /* Darker pink on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
+.explore-button:hover {
+    background-color: #ff3b68;
+    transform: scale(1.05);
 }
 
+/* Top Bar */
 .top-bar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 50px;
+    width: 100%;
+    height: 60px;
     background-color: #333;
     color: #fff;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
+    justify-content: center;
     opacity: 0;
     transition: opacity 0.5s ease;
-    z-index: 1000; /* Ensure it stays above other content */
+    z-index: 10;
 }
 
 .now-playing {
-    font-size: 1rem;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 .progress-container {
-    flex: 1;
-    margin: 0 10px;
-}
-
-#progress-bar {
-    width: 100%;
-}
-
-.controls {
+    width: 80%;
     display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-#play-pause-btn {
-    padding: 5px 10px;
-    font-size: 0.9rem;
+.progress-bar {
+    width: 100%;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.time-display {
+    font-size: 14px;
+}
+
+.play-pause-button {
+    padding: 10px 20px;
+    font-size: 16px;
     color: #fff;
     background-color: #ff6f91;
     border: none;
@@ -128,7 +130,6 @@ body, html {
     transition: background-color 0.3s ease;
 }
 
-#play-pause-btn:hover {
-    background-color: #ff4f73;
+.play-pause-button:hover {
+    background-color: #ff3b68;
 }
-

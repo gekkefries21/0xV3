@@ -16,15 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const changeSection = (newSection) => {
         if (newSection >= 0 && newSection < sections.length) {
+            // Ensure the current section's content fades out
             contents[currentSection].classList.remove('visible');
+            // Start transitioning to the new section
+            wrapper.style.transform = `translateY(-${newSection * 100}vh)`;
+            // Update section after transition
             setTimeout(() => {
                 currentSection = newSection;
-                wrapper.style.transform = `translateY(-${currentSection * 100}vh)`;
-                setTimeout(() => {
-                    contents[currentSection].classList.add('visible');
-                }, 500); // Delay for content fade-in after slide transition
+                contents[currentSection].classList.add('visible');
                 updateHash();
-            }, 500); // Delay for content fade-out before slide transition
+            }, 1000); // Ensure content is added after transition
         }
     };
 
@@ -33,9 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('wheel', (event) => {
         if (event.deltaY > 0) {
-            changeSection(currentSection + 1);
+            if (currentSection < sections.length - 1) {
+                changeSection(currentSection + 1);
+            }
         } else {
-            changeSection(currentSection - 1);
+            if (currentSection > 0) {
+                changeSection(currentSection - 1);
+            }
         }
     });
 });

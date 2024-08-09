@@ -217,6 +217,37 @@
         .download-section .button:hover {
             background-color: #ccc;
         }
+
+        /* Navigation Button Styles */
+        .nav-button {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px purple;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .nav-button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-button.bottom {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .nav-button.top {
+            top: 20px;
+            right: 20px;
+            transform: rotate(180deg); /* Rotate for the up arrow */
+        }
     </style>
 </head>
 <body>
@@ -234,6 +265,10 @@
         <div class="image-container">
             <img src="image.png" alt="Image">
         </div>
+        <!-- Navigation Button for Down Arrow -->
+        <div class="nav-button bottom" onclick="goToSection(1)">
+            <img src="arrow-down.svg" alt="Down Arrow">
+        </div>
     </div>
 
     <!-- Download Section -->
@@ -244,6 +279,10 @@
             <a href="download/0xV3.zip" download="0xV3.zip">
                 <button class="button">Download</button>
             </a>
+        </div>
+        <!-- Navigation Button for Up Arrow -->
+        <div class="nav-button top" onclick="goToSection(0)">
+            <img src="arrow-up.svg" alt="Up Arrow">
         </div>
     </div>
 
@@ -349,14 +388,13 @@
             downloadSection.classList.add('visible');
         }
 
-        window.onload = function() {
-            typeText();
-        };
-
-        let currentSection = 0;
-        const sections = document.querySelectorAll('.section');
+        function goToSection(index) {
+            currentSection = index;
+            switchSection();
+        }
 
         function switchSection() {
+            const sections = document.querySelectorAll('.section');
             sections.forEach((section, index) => {
                 if (index === currentSection) {
                     section.classList.add('visible');
@@ -386,6 +424,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             switchSection();
         });
+
+        window.onload = function() {
+            typeText();
+        };
     </script>
 </body>
 </html>
+

@@ -55,7 +55,7 @@
             font-size: 24px;
             text-align: center;
             width: 70ch;
-            color: white;
+            color: white; /* Ensure text color is white */
             animation: typing 4.5s steps(70, end), blink-caret 0.75s step-end infinite;
         }
 
@@ -76,7 +76,7 @@
             border: none;
             border-radius: 10px;
             transition: 0.3s;
-            box-shadow: 0 0 30px purple;
+            box-shadow: 0 0 30px purple; /* Increased glow size */
         }
 
         .button:hover {
@@ -142,7 +142,7 @@
         .scrambled-text {
             font-family: 'Source Code Pro', monospace;
             font-size: 36px;
-            color: white;
+            color: white; /* Ensure text color is white */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -153,8 +153,8 @@
         }
 
         :root {
-            --image-max-width: 60vw;
-            --image-max-height: 50vh;
+            --image-max-width: 60vw; /* Adjust this value to change image size */
+            --image-max-height: 50vh; /* Adjust this value to change image size */
         }
 
         .image-container {
@@ -171,7 +171,7 @@
             max-width: var(--image-max-width);
             max-height: var(--image-max-height);
             border-radius: 10px;
-            box-shadow: 0 0 30px purple;
+            box-shadow: 0 0 30px purple; /* Purple glow */
             transition: box-shadow 2s;
         }
 
@@ -211,47 +211,59 @@
             border: none;
             border-radius: 10px;
             transition: 0.3s;
-            box-shadow: 0 0 30px purple;
+            box-shadow: 0 0 30px purple; /* Same design as Continue button */
         }
 
         .download-section .button:hover {
             background-color: #ccc;
         }
 
-        /* Navigation Button Styles */
-        .nav-button {
-            position: fixed;
+        .arrow-circle {
+            position: absolute;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
             background-color: white;
+            border-radius: 50%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px purple;
+            align-items: center;
             cursor: pointer;
-            z-index: 10;
-            opacity: 0; /* Initially hidden */
-            transition: opacity 1s;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            z-index: 2;
         }
 
-        .nav-button img {
-            width: 20px;
-            height: 20px;
+        .arrow-circle::before {
+            content: '';
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 6px;
+            transform: rotate(45deg);
+            transition: transform 0.3s ease;
         }
 
-        /* Centered navigation button for the bottom of the section */
-        .nav-button.bottom {
+        .arrow-circle.down::before {
+            transform: rotate(45deg);
+        }
+
+        .arrow-circle.up::before {
+            transform: rotate(-135deg);
+        }
+
+        .arrow-circle.hidden {
+            display: none;
+        }
+
+        #down-arrow {
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        /* Centered navigation button for the top of the section */
-        .nav-button.top {
+        #up-arrow {
             top: 20px;
             left: 50%;
-            transform: translateX(-50%) rotate(180deg); /* Rotate for the up arrow */
+            transform: translateX(-50%);
         }
     </style>
 </head>
@@ -270,10 +282,7 @@
         <div class="image-container">
             <img src="image.png" alt="Image">
         </div>
-        <!-- Navigation Button for Down Arrow -->
-        <div class="nav-button bottom" id="down-arrow">
-            <img src="arrow-down.svg" alt="Down Arrow">
-        </div>
+        <div id="down-arrow" class="arrow-circle down"></div>
     </div>
 
     <!-- Download Section -->
@@ -285,10 +294,7 @@
                 <button class="button">Download</button>
             </a>
         </div>
-        <!-- Navigation Button for Up Arrow -->
-        <div class="nav-button top" id="up-arrow">
-            <img src="arrow-up.svg" alt="Up Arrow">
-        </div>
+        <div id="up-arrow" class="arrow-circle up hidden"></div>
     </div>
 
     <script>
@@ -328,7 +334,6 @@
             const topBar = document.querySelector('.bar.top');
             const bottomBar = document.querySelector('.bar.bottom');
             const audio = document.getElementById('audio');
-            const downArrow = document.getElementById('down-arrow');
             
             setTimeout(() => {
                 topBar.style.top = '0';
@@ -341,8 +346,6 @@
                 topBar.style.top = '-50%';
                 bottomBar.style.bottom = '-50%';
                 showScrambledText();
-                // Show the down arrow after the section is fully loaded
-                downArrow.style.opacity = 1;
             }, 2000);
         }
 
@@ -394,18 +397,16 @@
             
             welcomeSection.classList.add('hidden');
             downloadSection.classList.add('visible');
-            
-            // Show the up arrow once the download section is visible
-            document.getElementById('up-arrow').style.opacity = 1;
         }
 
-        function goToSection(index) {
-            currentSection = index;
-            switchSection();
-        }
+        window.onload = function() {
+            typeText();
+        };
+
+        let currentSection = 0;
+        const sections = document.querySelectorAll('.section');
 
         function switchSection() {
-            const sections = document.querySelectorAll('.section');
             sections.forEach((section, index) => {
                 if (index === currentSection) {
                     section.classList.add('visible');
@@ -415,6 +416,10 @@
                     section.classList.remove('visible');
                 }
             });
+
+            // Show/hide arrows based on current section
+            document.getElementById('down-arrow').classList.toggle('hidden', currentSection !== 0);
+            document.getElementById('up-arrow').classList.toggle('hidden', currentSection !== 1);
         }
 
         window.addEventListener('wheel', (event) => {
@@ -432,13 +437,23 @@
             switchSection();
         });
 
+        document.getElementById('down-arrow').addEventListener('click', () => {
+            if (currentSection < sections.length - 1) {
+                currentSection++;
+                switchSection();
+            }
+        });
+
+        document.getElementById('up-arrow').addEventListener('click', () => {
+            if (currentSection > 0) {
+                currentSection--;
+                switchSection();
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             switchSection();
         });
-
-        window.onload = function() {
-            typeText();
-        };
     </script>
 </body>
 </html>

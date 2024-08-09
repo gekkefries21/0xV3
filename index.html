@@ -153,13 +153,14 @@
                 bottomBar.style.bottom = '0';
             }, 1000);
 
-            setTimeout(showSimplePage, 2000); // Delay to reveal the new page after the bars close
+            setTimeout(() => {
+                topBar.style.top = '-50%';
+                bottomBar.style.bottom = '-50%';
+                showSimplePage();
+            }, 2000);
         }
 
         function showSimplePage() {
-            const topBar = document.querySelector('.bar.top');
-            const bottomBar = document.querySelector('.bar.bottom');
-
             document.body.innerHTML = `
                 <style>
                     body {
@@ -179,9 +180,6 @@
                 </style>
                 <h1>Welcome to the simple page!</h1>
             `;
-
-            topBar.style.top = '-50%';
-            bottomBar.style.bottom = '-50%';
         }
 
         // Start the typing effect
@@ -191,5 +189,4 @@
     </script>
 </body>
 </html>
-
 

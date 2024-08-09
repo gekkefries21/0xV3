@@ -28,7 +28,6 @@
             left: 0;
             transition: opacity 1s;
             z-index: 1;
-            background-color: #000;
         }
 
         .section.hidden {
@@ -353,11 +352,12 @@
             typeText();
         };
 
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.section');
-            const scrollTop = window.scrollY;
+        let currentSection = 0;
+        const sections = document.querySelectorAll('.section');
+
+        function switchSection() {
             sections.forEach((section, index) => {
-                if (scrollTop >= index * window.innerHeight && scrollTop < (index + 1) * window.innerHeight) {
+                if (index === currentSection) {
                     section.classList.add('visible');
                     section.classList.remove('hidden');
                 } else {
@@ -365,7 +365,27 @@
                     section.classList.remove('visible');
                 }
             });
+        }
+
+        window.addEventListener('wheel', (event) => {
+            if (event.deltaY > 0) {
+                // Scroll down
+                if (currentSection < sections.length - 1) {
+                    currentSection++;
+                }
+            } else {
+                // Scroll up
+                if (currentSection > 0) {
+                    currentSection--;
+                }
+            }
+            switchSection();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchSection();
         });
     </script>
 </body>
 </html>
+

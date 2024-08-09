@@ -16,7 +16,6 @@
             font-family: Arial, sans-serif;
             font-size: 24px;
             overflow: hidden;
-            cursor: none; /* Hide default cursor */
         }
 
         @font-face {
@@ -112,6 +111,16 @@
             to { top: 10%; }
         }
 
+        @keyframes fadeInImage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 0 purple; }
+            to { box-shadow: 0 0 30px purple; }
+        }
+
         .scrambled-text {
             font-family: 'Source Code Pro', monospace;
             font-size: 36px;
@@ -126,24 +135,21 @@
         }
 
         .image-container {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             display: none;
             opacity: 0;
-            transition: opacity 2s, box-shadow 2s;
-        }
-
-        .image {
-            max-width: 80vw;
-            max-height: 80vh;
-            border-radius: 15px;
-            box-shadow: 0 0 20px purple; /* Purple glow around the image */
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            animation: fadeInImage 2s forwards;
         }
 
         .image-container img {
-            pointer-events: none; /* Ensure the image does not interfere with cursor interaction */
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 0 30px purple; /* Purple glow */
+            transition: box-shadow 2s;
         }
     </style>
 </head>
@@ -161,9 +167,9 @@
     <!-- Audio element with loop attribute -->
     <audio id="audio" src="song.mp3" loop></audio>
 
-    <!-- Image container with purple glow -->
+    <!-- Image container -->
     <div class="image-container">
-        <img id="image" class="image" src="image.png" alt="Image">
+        <img src="image.png" alt="Image">
     </div>
 
     <script>
@@ -252,15 +258,10 @@
         function showImage() {
             const imageContainer = document.querySelector('.image-container');
             imageContainer.style.display = 'block';
-            imageContainer.style.opacity = 1;
+            setTimeout(() => {
+                imageContainer.style.opacity = '1';
+            }, 1000);
         }
-
-        document.addEventListener('mousemove', (event) => {
-            const image = document.getElementById('image');
-            const rect = image.getBoundingClientRect();
-            image.style.left = `${event.clientX - rect.width / 2}px`;
-            image.style.top = `${event.clientY - rect.height / 2}px`;
-        });
 
         window.onload = function() {
             typeText();
@@ -268,4 +269,5 @@
     </script>
 </body>
 </html>
+
 

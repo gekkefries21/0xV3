@@ -37,7 +37,7 @@
             margin: 0 auto;
             font-size: 24px;
             text-align: center;
-            width: 70ch; /* Adjusted to fit the full text */
+            width: 70ch;
             animation: typing 4.5s steps(70, end), blink-caret 0.75s step-end infinite;
         }
 
@@ -99,6 +99,30 @@
         @keyframes fadeOut {
             to { opacity: 0; }
         }
+
+        @keyframes textScramble {
+            0% { opacity: 0; }
+            1% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes moveToTop {
+            from { top: 50%; }
+            to { top: 10%; }
+        }
+
+        .scrambled-text {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 36px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: textScramble 2s steps(10, start) forwards, moveToTop 2s ease-in-out 2s forwards;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -121,9 +145,9 @@
             if (index < message.length) {
                 messageElement.textContent += message.charAt(index);
                 index++;
-                setTimeout(typeText, 100); // Adjust speed of typing here
+                setTimeout(typeText, 100);
             } else {
-                setTimeout(deleteText, 1000); // Wait before starting to delete
+                setTimeout(deleteText, 1000);
             }
         }
 
@@ -131,7 +155,7 @@
             if (index > 0) {
                 messageElement.textContent = message.substring(0, index - 1);
                 index--;
-                setTimeout(deleteText, 50); // Adjust speed of deleting here
+                setTimeout(deleteText, 50);
             } else {
                 showButton();
             }
@@ -156,30 +180,38 @@
             setTimeout(() => {
                 topBar.style.top = '-50%';
                 bottomBar.style.bottom = '-50%';
-                showSimplePage();
+                showScrambledText();
             }, 2000);
         }
 
-        function showSimplePage() {
-            document.body.innerHTML = `
-                <style>
-                    body {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        height: 100vh;
-                        background-color: #f0f0f0;
-                        margin: 0;
-                        font-family: Arial, sans-serif;
-                        font-size: 24px;
-                    }
+        function showScrambledText() {
+            document.body.style.backgroundColor = '#2a013d'; // Dark purple background
 
-                    h1 {
-                        color: #333;
+            const scrambledText = "Welcome To 0x";
+            const textElement = document.createElement('div');
+            textElement.className = 'scrambled-text';
+            document.body.appendChild(textElement);
+
+            let scrambleInterval = setInterval(() => {
+                textElement.textContent = scrambledText.split('').map(char => 
+                    Math.random() < 0.5 ? String.fromCharCode(Math.floor(Math.random() * 94) + 33) : char
+                ).join('');
+            }, 50);
+
+            setTimeout(() => {
+                clearInterval(scrambleInterval);
+                let revealIndex = 0;
+                let revealInterval = setInterval(() => {
+                    if (revealIndex < scrambledText.length) {
+                        textElement.textContent = scrambledText.substring(0, revealIndex + 1) + scrambledText.substring(revealIndex + 1).replace(/./g, char =>
+                            Math.random() < 0.5 ? String.fromCharCode(Math.floor(Math.random() * 94) + 33) : char
+                        );
+                        revealIndex++;
+                    } else {
+                        clearInterval(revealInterval);
                     }
-                </style>
-                <h1>Welcome to the simple page!</h1>
-            `;
+                }, 100);
+            }, 2000);
         }
 
         // Start the typing effect
@@ -189,4 +221,5 @@
     </script>
 </body>
 </html>
+
 

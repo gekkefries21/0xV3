@@ -15,10 +15,18 @@
             color: white;
             font-family: Arial, sans-serif;
             font-size: 24px;
+            overflow: hidden;
+        }
+
+        @font-face {
+            font-family: 'Source Code Pro';
+            src: url('https://fonts.gstatic.com/s/sourcecodepro/v21/HI_SiYsKILxRpg3hIp6PlDOIAYLMY_8tqMI.woff2') format('woff2');
         }
 
         .container {
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .message {
@@ -29,37 +37,67 @@
             margin: 0 auto;
             font-size: 24px;
             text-align: center;
-            width: 70ch; /* Increased to accommodate longer text */
-            animation: typing 4.5s steps(50, end), blink-caret 0.75s step-end infinite;
+            width: 70ch; /* Adjusted to fit the full text */
+            animation: typing 4.5s steps(70, end), blink-caret 0.75s step-end infinite;
         }
 
         .button-container {
             display: none;
             margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
         }
 
         .button {
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-family: 'Source Code Pro', monospace;
             cursor: pointer;
             background-color: #fff;
             color: #000;
             border: none;
+            border-radius: 10px;
             transition: 0.3s;
+            box-shadow: 0 0 15px purple;
         }
 
         .button:hover {
             background-color: #ccc;
         }
 
+        .bar {
+            position: fixed;
+            width: 100%;
+            height: 50%;
+            background-color: white;
+            z-index: 2;
+            transition: all 1s ease-in-out;
+        }
+
+        .bar.top {
+            top: -50%;
+        }
+
+        .bar.bottom {
+            bottom: -50%;
+        }
+
         @keyframes typing {
             from { width: 0; }
-            to { width: 50ch; }
+            to { width: 70ch; }
         }
 
         @keyframes blink-caret {
             from, to { border-color: transparent; }
             50% { border-color: white; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
         }
     </style>
 </head>
@@ -67,9 +105,12 @@
     <div class="container">
         <div id="message" class="message"></div>
         <div class="button-container">
-            <button class="button" onclick="showSimplePage()">Continue</button>
+            <button class="button" onclick="startTransition()">Continue</button>
         </div>
     </div>
+
+    <div class="bar top"></div>
+    <div class="bar bottom"></div>
 
     <script>
         const message = "Please know that we are NOT responsible for anything that happens";
@@ -97,10 +138,28 @@
         }
 
         function showButton() {
-            document.querySelector('.button-container').style.display = 'block';
+            const buttonContainer = document.querySelector('.button-container');
+            buttonContainer.style.display = 'block';
+        }
+
+        function startTransition() {
+            const button = document.querySelector('.button-container');
+            button.style.animation = 'fadeOut 1s forwards';
+            
+            const topBar = document.querySelector('.bar.top');
+            const bottomBar = document.querySelector('.bar.bottom');
+            setTimeout(() => {
+                topBar.style.top = '0';
+                bottomBar.style.bottom = '0';
+            }, 1000);
+
+            setTimeout(showSimplePage, 2000); // Delay to reveal the new page after the bars close
         }
 
         function showSimplePage() {
+            const topBar = document.querySelector('.bar.top');
+            const bottomBar = document.querySelector('.bar.bottom');
+
             document.body.innerHTML = `
                 <style>
                     body {
@@ -120,6 +179,9 @@
                 </style>
                 <h1>Welcome to the simple page!</h1>
             `;
+
+            topBar.style.top = '-50%';
+            bottomBar.style.bottom = '-50%';
         }
 
         // Start the typing effect
@@ -129,4 +191,5 @@
     </script>
 </body>
 </html>
+
 

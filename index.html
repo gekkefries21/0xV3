@@ -38,6 +38,7 @@
             font-size: 24px;
             text-align: center;
             width: 70ch;
+            height: 24px; /* To keep consistent height for caret alignment */
             animation: typing 4.5s steps(70, end), blink-caret 0.75s step-end infinite;
         }
 
@@ -58,7 +59,7 @@
             border: none;
             border-radius: 10px;
             transition: 0.3s;
-            box-shadow: 0 0 30px purple; /* Increased glow size */
+            box-shadow: 0 0 30px purple;
         }
 
         .button:hover {
@@ -136,7 +137,7 @@
     <div class="bar top"></div>
     <div class="bar bottom"></div>
 
-    <audio id="audio" src="song.mp3"></audio>
+    <audio id="audio" src="song.mp3" loop></audio>
 
     <script>
         const message = "Please know that we are NOT responsible for anything that happens";
@@ -180,7 +181,7 @@
                 topBar.style.top = '0';
                 bottomBar.style.bottom = '0';
                 audio.volume = 0.5;
-                audio.play(); // Play audio when transition starts
+                audio.play();
             }, 1000);
 
             setTimeout(() => {
@@ -226,5 +227,4 @@
     </script>
 </body>
 </html>
-
 

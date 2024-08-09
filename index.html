@@ -7,15 +7,13 @@
     <style>
         body {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
+            flex-direction: column;
+            height: 200vh; /* To ensure scrollable content */
             margin: 0;
-            color: white;
+            overflow: hidden;
             font-family: Arial, sans-serif;
             font-size: 24px;
-            overflow: hidden;
+            background-color: #000;
         }
 
         @font-face {
@@ -23,10 +21,20 @@
             src: url('https://fonts.gstatic.com/s/sourcecodepro/v21/HI_SiYsKILxRpg3hIp6PlDOIAYLMY_8tqMI.woff2') format('woff2');
         }
 
-        .container {
-            text-align: center;
-            position: relative;
-            z-index: 1;
+        .section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .message {
@@ -62,6 +70,43 @@
         }
 
         .button:hover {
+            background-color: #ccc;
+        }
+
+        .box {
+            border: 2px solid white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 80%;
+        }
+
+        .box h1 {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .box p {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+
+        .download-button {
+            padding: 15px 30px;
+            font-size: 20px;
+            font-family: 'Source Code Pro', monospace;
+            cursor: pointer;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            transition: 0.3s;
+            box-shadow: 0 0 30px purple; /* Purple glow */
+        }
+
+        .download-button:hover {
             background-color: #ccc;
         }
 
@@ -135,8 +180,8 @@
         }
 
         :root {
-            --image-max-width: 70vw; /* Adjust this value to change image size */
-            --image-max-height: 60vh; /* Adjust this value to change image size */
+            --image-max-width: 60vw; /* Adjust this value to change image size */
+            --image-max-height: 50vh; /* Adjust this value to change image size */
         }
 
         .image-container {
@@ -159,27 +204,37 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="message" class="message"></div>
-        <div class="button-container">
-            <button class="button" onclick="startTransition()">Continue</button>
+    <div id="section1" class="section">
+        <div class="container">
+            <div id="message" class="message"></div>
+            <div class="button-container">
+                <button class="button" onclick="startTransition()">Continue</button>
+            </div>
+        </div>
+
+        <div class="bar top"></div>
+        <div class="bar bottom"></div>
+        <audio id="audio" src="song.mp3" loop></audio>
+        <div class="image-container">
+            <img src="image.png" alt="Image">
         </div>
     </div>
 
-    <div class="bar top"></div>
-    <div class="bar bottom"></div>
-
-    <!-- Audio element with loop attribute -->
-    <audio id="audio" src="song.mp3" loop></audio>
-
-    <!-- Image container -->
-    <div class="image-container">
-        <img src="image.png" alt="Image">
+    <div id="section2" class="section hidden">
+        <div class="box">
+            <h1>0x</h1>
+            <p>Free<br>Windows 10/11<br>.Exe</p>
+            <a href="path/to/0xV3.exe" download>
+                <button class="download-button">Download</button>
+            </a>
+        </div>
     </div>
 
     <script>
         const message = "Please know that we are NOT responsible for anything that happens";
         const messageElement = document.getElementById('message');
+        const section1 = document.getElementById('section1');
+        const section2 = document.getElementById('section2');
         let index = 0;
 
         function typeText() {
@@ -268,9 +323,33 @@
             }, 1000);
         }
 
+        function fadeOutSection(section) {
+            section.style.opacity = 0;
+            setTimeout(() => section.classList.add('hidden'), 1000);
+        }
+
+        function fadeInSection(section) {
+            section.classList.remove('hidden');
+            setTimeout(() => section.style.opacity = 1, 100);
+        }
+
         window.onload = function() {
             typeText();
         };
+
+        let currentSection = 1;
+
+        window.addEventListener('wheel', (event) => {
+            if (event.deltaY > 0 && currentSection === 1) {
+                fadeOutSection(section1);
+                fadeInSection(section2);
+                currentSection = 2;
+            } else if (event.deltaY < 0 && currentSection === 2) {
+                fadeOutSection(section2);
+                fadeInSection(section1);
+                currentSection = 1;
+            }
+        });
     </script>
 </body>
 </html>

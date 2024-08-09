@@ -71,7 +71,7 @@
     <div class="container">
         <div id="message" class="message"></div>
         <div class="button-container">
-            <button class="button" onclick="redirect()">Continue</button>
+            <button class="button" onclick="showSimplePage()">Continue</button>
         </div>
     </div>
 
@@ -104,8 +104,26 @@
             document.querySelector('.button-container').style.display = 'block';
         }
 
-        function redirect() {
-            window.location.href = "page.html";
+        function showSimplePage() {
+            document.body.innerHTML = `
+                <style>
+                    body {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        background-color: #f0f0f0;
+                        margin: 0;
+                        font-family: Arial, sans-serif;
+                        font-size: 24px;
+                    }
+
+                    h1 {
+                        color: #333;
+                    }
+                </style>
+                <h1>Welcome to the simple page!</h1>
+            `;
         }
 
         // Start the typing effect

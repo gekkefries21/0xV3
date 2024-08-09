@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warning</title>
+    <title>Multi-Section Page</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            height: 200vh; /* To ensure scrollable content */
             margin: 0;
-            overflow: hidden;
             font-family: Arial, sans-serif;
-            font-size: 24px;
-            background-color: #000;
+            overflow: hidden;
+            transition: background-color 1s;
         }
 
         @font-face {
@@ -22,19 +18,25 @@
         }
 
         .section {
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 1s;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
-        .hidden {
+        .section.hidden {
             opacity: 0;
             pointer-events: none;
+        }
+
+        .section.visible {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .message {
@@ -70,43 +72,6 @@
         }
 
         .button:hover {
-            background-color: #ccc;
-        }
-
-        .box {
-            border: 2px solid white;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            max-width: 400px;
-            width: 80%;
-        }
-
-        .box h1 {
-            font-family: 'Source Code Pro', monospace;
-            font-size: 36px;
-            margin: 0;
-        }
-
-        .box p {
-            font-size: 20px;
-            margin: 20px 0;
-        }
-
-        .download-button {
-            padding: 15px 30px;
-            font-size: 20px;
-            font-family: 'Source Code Pro', monospace;
-            cursor: pointer;
-            background-color: #fff;
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            transition: 0.3s;
-            box-shadow: 0 0 30px purple; /* Purple glow */
-        }
-
-        .download-button:hover {
             background-color: #ccc;
         }
 
@@ -179,11 +144,6 @@
             white-space: nowrap;
         }
 
-        :root {
-            --image-max-width: 60vw; /* Adjust this value to change image size */
-            --image-max-height: 50vh; /* Adjust this value to change image size */
-        }
-
         .image-container {
             display: none;
             opacity: 0;
@@ -195,23 +155,63 @@
         }
 
         .image-container img {
-            max-width: var(--image-max-width);
-            max-height: var(--image-max-height);
+            max-width: 70vw;
+            max-height: 60vh;
             border-radius: 10px;
             box-shadow: 0 0 30px purple; /* Purple glow */
             transition: box-shadow 2s;
         }
+
+        .download-section {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .download-section h1 {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 36px;
+            color: white;
+        }
+
+        .download-section p {
+            font-family: 'Source Code Pro', monospace;
+            color: white;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .download-section .button {
+            padding: 15px 30px;
+            font-size: 20px;
+            font-family: 'Source Code Pro', monospace;
+            cursor: pointer;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            transition: 0.3s;
+            box-shadow: 0 0 30px purple; /* Same design as Continue button */
+        }
+
+        .download-section .button:hover {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
-    <div id="section1" class="section">
+    <!-- Welcome Section -->
+    <div id="welcome-section" class="section visible">
         <div class="container">
             <div id="message" class="message"></div>
             <div class="button-container">
                 <button class="button" onclick="startTransition()">Continue</button>
             </div>
         </div>
-
         <div class="bar top"></div>
         <div class="bar bottom"></div>
         <audio id="audio" src="song.mp3" loop></audio>
@@ -220,48 +220,47 @@
         </div>
     </div>
 
-    <div id="section2" class="section hidden">
-        <div class="box">
+    <!-- Download Section -->
+    <div id="download-section" class="section hidden">
+        <div class="download-section">
             <h1>0x</h1>
             <p>Free<br>Windows 10/11<br>.Exe</p>
             <a href="path/to/0xV3.exe" download>
-                <button class="download-button">Download</button>
+                <button class="button">Download</button>
             </a>
         </div>
     </div>
 
     <script>
-        const message = "Please know that we are NOT responsible for anything that happens";
-        const messageElement = document.getElementById('message');
-        const section1 = document.getElementById('section1');
-        const section2 = document.getElementById('section2');
-        let index = 0;
+        const sections = document.querySelectorAll('.section');
+        let currentSectionIndex = 0;
 
-        function typeText() {
-            if (index < message.length) {
-                messageElement.textContent += message.charAt(index);
-                index++;
-                setTimeout(typeText, 100);
+        function switchSection(toIndex) {
+            if (toIndex < 0 || toIndex >= sections.length || toIndex === currentSectionIndex) return;
+
+            const currentSection = sections[currentSectionIndex];
+            const nextSection = sections[toIndex];
+
+            currentSection.classList.remove('visible');
+            currentSection.classList.add('hidden');
+            
+            nextSection.classList.remove('hidden');
+            nextSection.classList.add('visible');
+            
+            currentSectionIndex = toIndex;
+        }
+
+        function handleScroll(event) {
+            if (event.deltaY > 0) {
+                switchSection(currentSectionIndex + 1);
             } else {
-                setTimeout(deleteText, 1000);
+                switchSection(currentSectionIndex - 1);
             }
         }
 
-        function deleteText() {
-            if (index > 0) {
-                messageElement.textContent = message.substring(0, index - 1);
-                index--;
-                setTimeout(deleteText, 50);
-            } else {
-                showButton();
-            }
-        }
+        document.addEventListener('wheel', handleScroll);
 
-        function showButton() {
-            const buttonContainer = document.querySelector('.button-container');
-            buttonContainer.style.display = 'block';
-        }
-
+        // Initial function calls
         function startTransition() {
             const button = document.querySelector('.button-container');
             button.style.animation = 'fadeOut 1s forwards';
@@ -323,36 +322,43 @@
             }, 1000);
         }
 
-        function fadeOutSection(section) {
-            section.style.opacity = 0;
-            setTimeout(() => section.classList.add('hidden'), 1000);
-        }
-
-        function fadeInSection(section) {
-            section.classList.remove('hidden');
-            setTimeout(() => section.style.opacity = 1, 100);
-        }
-
         window.onload = function() {
             typeText();
         };
 
-        let currentSection = 1;
+        function typeText() {
+            const message = "Please know that we are NOT responsible for anything that happens";
+            const messageElement = document.getElementById('message');
+            let index = 0;
 
-        window.addEventListener('wheel', (event) => {
-            if (event.deltaY > 0 && currentSection === 1) {
-                fadeOutSection(section1);
-                fadeInSection(section2);
-                currentSection = 2;
-            } else if (event.deltaY < 0 && currentSection === 2) {
-                fadeOutSection(section2);
-                fadeInSection(section1);
-                currentSection = 1;
+            function typing() {
+                if (index < message.length) {
+                    messageElement.textContent += message.charAt(index);
+                    index++;
+                    setTimeout(typing, 100);
+                } else {
+                    setTimeout(deleteText, 1000);
+                }
             }
-        });
+
+            function deleteText() {
+                if (index > 0) {
+                    messageElement.textContent = message.substring(0, index - 1);
+                    index--;
+                    setTimeout(deleteText, 50);
+                } else {
+                    showButton();
+                }
+            }
+
+            function showButton() {
+                const buttonContainer = document.querySelector('.button-container');
+                buttonContainer.style.display = 'block';
+            }
+
+            typing();
+        }
     </script>
 </body>
 </html>
-
-
 

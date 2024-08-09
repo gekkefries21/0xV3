@@ -58,7 +58,7 @@
             border: none;
             border-radius: 10px;
             transition: 0.3s;
-            box-shadow: 0 0 15px purple;
+            box-shadow: 0 0 30px purple; /* Increased glow size */
         }
 
         .button:hover {
@@ -136,6 +136,8 @@
     <div class="bar top"></div>
     <div class="bar bottom"></div>
 
+    <audio id="audio" src="song.mp3"></audio>
+
     <script>
         const message = "Please know that we are NOT responsible for anything that happens";
         const messageElement = document.getElementById('message');
@@ -172,9 +174,13 @@
             
             const topBar = document.querySelector('.bar.top');
             const bottomBar = document.querySelector('.bar.bottom');
+            const audio = document.getElementById('audio');
+            
             setTimeout(() => {
                 topBar.style.top = '0';
                 bottomBar.style.bottom = '0';
+                audio.volume = 0.5;
+                audio.play(); // Play audio when transition starts
             }, 1000);
 
             setTimeout(() => {
@@ -185,7 +191,7 @@
         }
 
         function showScrambledText() {
-            document.body.style.backgroundColor = '#2a013d'; // Dark purple background
+            document.body.style.backgroundColor = '#2a013d';
 
             const scrambledText = "Welcome To 0x";
             const textElement = document.createElement('div');
@@ -214,7 +220,6 @@
             }, 2000);
         }
 
-        // Start the typing effect
         window.onload = function() {
             typeText();
         };

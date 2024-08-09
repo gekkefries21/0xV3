@@ -16,6 +16,7 @@
             font-family: Arial, sans-serif;
             font-size: 24px;
             overflow: hidden;
+            cursor: none; /* Hide default cursor */
         }
 
         @font-face {
@@ -123,6 +124,23 @@
             animation: textScramble 2s steps(10, start) forwards, moveToTop 2s ease-in-out 2s forwards;
             white-space: nowrap;
         }
+
+        .image-container {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            opacity: 0;
+            transition: opacity 2s, box-shadow 2s;
+        }
+
+        .image {
+            max-width: 80vw;
+            max-height: 80vh;
+            border-radius: 15px;
+            box-shadow: 0 0 20px purple; /* Purple glow around the image */
+        }
     </style>
 </head>
 <body>
@@ -138,6 +156,11 @@
 
     <!-- Audio element with loop attribute -->
     <audio id="audio" src="song.mp3" loop></audio>
+
+    <!-- Image container with purple glow -->
+    <div class="image-container">
+        <img id="image" class="image" src="image.png" alt="Image">
+    </div>
 
     <script>
         const message = "Please know that we are NOT responsible for anything that happens";
@@ -216,10 +239,24 @@
                         revealIndex++;
                     } else {
                         clearInterval(revealInterval);
+                        showImage();
                     }
                 }, 100);
             }, 2000);
         }
+
+        function showImage() {
+            const imageContainer = document.querySelector('.image-container');
+            imageContainer.style.display = 'block';
+            imageContainer.style.opacity = 1;
+        }
+
+        document.addEventListener('mousemove', (event) => {
+            const image = document.getElementById('image');
+            const rect = image.getBoundingClientRect();
+            image.style.left = `${event.clientX - rect.width / 2}px`;
+            image.style.top = `${event.clientY - rect.height / 2}px`;
+        });
 
         window.onload = function() {
             typeText();
@@ -227,5 +264,4 @@
     </script>
 </body>
 </html>
-
 

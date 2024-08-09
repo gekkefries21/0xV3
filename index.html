@@ -38,7 +38,6 @@
             font-size: 24px;
             text-align: center;
             width: 70ch;
-            height: 24px; /* To keep consistent height for caret alignment */
             animation: typing 4.5s steps(70, end), blink-caret 0.75s step-end infinite;
         }
 
@@ -59,7 +58,7 @@
             border: none;
             border-radius: 10px;
             transition: 0.3s;
-            box-shadow: 0 0 30px purple;
+            box-shadow: 0 0 30px purple; /* Increased glow size */
         }
 
         .button:hover {
@@ -137,6 +136,7 @@
     <div class="bar top"></div>
     <div class="bar bottom"></div>
 
+    <!-- Audio element with loop attribute -->
     <audio id="audio" src="song.mp3" loop></audio>
 
     <script>
@@ -181,7 +181,7 @@
                 topBar.style.top = '0';
                 bottomBar.style.bottom = '0';
                 audio.volume = 0.5;
-                audio.play();
+                audio.play(); // Play audio when transition starts
             }, 1000);
 
             setTimeout(() => {
@@ -227,4 +227,5 @@
     </script>
 </body>
 </html>
+
 

@@ -238,14 +238,14 @@
             height: 20px;
         }
 
-        /* Centered navigation button for the bottom of the section */
+        /* Centered navigation button for the bottom of the Welcome section */
         .nav-button.bottom {
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        /* Centered navigation button for the top of the section */
+        /* Centered navigation button for the top of the Download section */
         .nav-button.top {
             top: 20px;
             left: 50%;
@@ -409,10 +409,11 @@
             });
         }
 
+        let currentSection = 0;
         window.addEventListener('wheel', (event) => {
             if (event.deltaY > 0) {
                 // Scroll down
-                if (currentSection < sections.length - 1) {
+                if (currentSection < 1) {
                     currentSection++;
                 }
             } else {
@@ -434,3 +435,4 @@
     </script>
 </body>
 </html>
+
